@@ -47,7 +47,6 @@ class PermissionGeneratorBackpackCommand extends Command
             $existingPermission = Permission::where(['name' => $permissionName])->first();
 
             if ($existingPermission) {
-
                 $continueAdding = $this->confirm("$permissionName already exists, do you want to carry on? [y|N]");
 
                 if ($continueAdding) {
@@ -56,6 +55,7 @@ class PermissionGeneratorBackpackCommand extends Command
                     continue;
                 } else {
                     $bar->finish();
+
                     return $this->error("\nCancelled adding any more permissions.");
                 }
             } else {

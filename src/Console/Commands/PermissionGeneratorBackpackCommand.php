@@ -8,10 +8,10 @@ use Spatie\Permission\Models\Permission;
 class PermissionGeneratorBackpackCommand extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+      * The name and signature of the console command.
+      *
+      * @var string
+      */
      protected $signature = 'backpack:permissions {route : Name of the route e.g admin/teams} {--P|permission=* : A permission you wish to add, can accept multiple instances of -P|permission}';
 
     /**

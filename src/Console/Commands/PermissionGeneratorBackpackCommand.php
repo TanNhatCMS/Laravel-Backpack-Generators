@@ -40,7 +40,6 @@ class PermissionGeneratorBackpackCommand extends Command
         $bar = $this->output->createProgressBar(count($permissions));
 
         foreach ($permissions as $permission) {
-
             $permissionName = trim($routeName, '/').'/'.trim($permission, '/');
             $permissionName = strtolower($permissionName);
 

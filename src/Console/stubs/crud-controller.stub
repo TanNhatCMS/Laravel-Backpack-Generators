@@ -19,8 +19,8 @@ class DummyClassCrudController extends CrudController
         | BASIC CRUD INFORMATION
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel("App\Models\DummyClass");
-        $this->crud->setRoute("admin/dummy_class");
+        $this->crud->setModel('App\Models\DummyClass');
+        $this->crud->setRoute('admin/dummy_class');
         $this->crud->setEntityNameStrings('dummy_class', 'DummyTable');
 
         /*

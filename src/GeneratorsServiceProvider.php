@@ -16,6 +16,7 @@ class GeneratorsServiceProvider extends ServiceProvider
         'Backpack\Generators\Console\Commands\CrudControllerBackpackCommand',
         'Backpack\Generators\Console\Commands\CrudRequestBackpackCommand',
         'Backpack\Generators\Console\Commands\CrudBackpackCommand',
+        'Backpack\Generators\Console\Commands\PermissionGeneratorBackpackCommand',
     ];
 
     /**

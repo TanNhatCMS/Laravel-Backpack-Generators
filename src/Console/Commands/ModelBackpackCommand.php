@@ -19,14 +19,17 @@ class ModelBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:model {name} {--softdelete}';
+    protected $signature = 'backpack:model
+                            {name : Name of the model}
+                            {--softdelete : Add soft deletes to the model}
+                            {--nomigration : Disables creating of the migration file}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a backpack templated model';
+    protected $description = 'Generate a backpack templated model and migration';
 
     /**
      * The type of class being generated.
@@ -104,5 +107,29 @@ class ModelBackpackCommand extends GeneratorCommand
         return [
 
         ];
+    }
+
+    protected function buildMigration($name)
+    {
+        \Artisan::call('make:migration', [
+            'name' => 'create_'.snake_case($name).'_table',
+            '--create' => camel_case($name),
+        ]);
+
+        if ($this->option('softdelete')) {
+            $migration = collect(\File::allFiles('database/migrations'))->last();
+            $migrationContent = file_get_contents($migration->getRealPath());
+            $newMigrationContent = str_replace("\$table->increments('id');\n", "\$table->increments('id');\n            \$table->softDeletes();\n", $migrationContent);
+            file_put_contents($migration->getRealPath(), $newMigrationContent);
+        }
+    }
+
+    public function handle()
+    {
+        $name = $this->argument('name');
+
+        if (! $this->option('nomigration')) {
+            $this->buildMigration($name);
+        }
     }
 }

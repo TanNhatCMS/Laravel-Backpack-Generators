@@ -8,6 +8,11 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\DummyClassRequest as StoreRequest;
 use App\Http\Requests\DummyClassRequest as UpdateRequest;
 
+/**
+ * Class DummyClassCrudController
+ * @package App\Http\Controllers\Admin
+ * @property-read CrudPanel $crud
+ */
 class DummyClassCrudController extends CrudController
 {
     public function setup()

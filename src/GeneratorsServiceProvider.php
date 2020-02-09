@@ -2,16 +2,16 @@
 
 namespace Backpack\Generators;
 
-use Illuminate\Support\ServiceProvider;
-use Backpack\Generators\Console\Commands\CrudBackpackCommand;
-use Backpack\Generators\Console\Commands\ViewBackpackCommand;
-use Backpack\Generators\Console\Commands\ModelBackpackCommand;
 use Backpack\Generators\Console\Commands\ConfigBackpackCommand;
-use Backpack\Generators\Console\Commands\RequestBackpackCommand;
-use Backpack\Generators\Console\Commands\CrudModelBackpackCommand;
-use Backpack\Generators\Console\Commands\CrudRequestBackpackCommand;
-use Backpack\Generators\Console\Commands\CrudOperationBackpackCommand;
+use Backpack\Generators\Console\Commands\CrudBackpackCommand;
 use Backpack\Generators\Console\Commands\CrudControllerBackpackCommand;
+use Backpack\Generators\Console\Commands\CrudModelBackpackCommand;
+use Backpack\Generators\Console\Commands\CrudOperationBackpackCommand;
+use Backpack\Generators\Console\Commands\CrudRequestBackpackCommand;
+use Backpack\Generators\Console\Commands\ModelBackpackCommand;
+use Backpack\Generators\Console\Commands\RequestBackpackCommand;
+use Backpack\Generators\Console\Commands\ViewBackpackCommand;
+use Illuminate\Support\ServiceProvider;
 
 class GeneratorsServiceProvider extends ServiceProvider
 {

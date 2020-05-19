@@ -4,8 +4,8 @@ namespace Backpack\Generators\Console\Commands;
 
 use Artisan;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class BuildBackpackCommand extends Command
 {
@@ -33,23 +33,21 @@ class BuildBackpackCommand extends Command
         // make a list of all models
         $models = $this->getModels(base_path().'/app');
 
-        if (!count($models)) {
+        if (! count($models)) {
             $this->info('No models found.');
 
             return false;
         }
 
-        foreach ($models as $key => $model)
-        {
+        foreach ($models as $key => $model) {
             $this->info('--- '.$model.' ---');
             // Create the CrudController & Request
             // Attach CrudTrait to Model
             // Add sidebar item
-            // Add routes 
+            // Add routes
             Artisan::call('backpack:crud', ['name' => $model]);
             echo Artisan::output();
         }
-
     }
 
     private function getModels($path)
@@ -58,18 +56,18 @@ class BuildBackpackCommand extends Command
         $results = scandir($path);
 
         foreach ($results as $result) {
-
-            if ($result === '.' or $result === '..') continue;
-            $filename = $path . '/' . $result;
+            if ($result === '.' or $result === '..') {
+                continue;
+            }
+            $filename = $path.'/'.$result;
 
             if (is_dir($filename)) {
                 $out = array_merge($out, $this->getModels($filename));
             } else {
                 $file_content = file_get_contents($filename);
                 if (Str::contains($file_content, 'Illuminate\Database\Eloquent\Model') &&
-                    Str::contains($file_content, 'extends Model')) 
-                {
-                    $out[] = Arr::last(explode("/", substr($filename, 0, -4)));
+                    Str::contains($file_content, 'extends Model')) {
+                    $out[] = Arr::last(explode('/', substr($filename, 0, -4)));
                 }
             }
         }

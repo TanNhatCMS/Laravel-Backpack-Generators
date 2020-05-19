@@ -21,23 +21,21 @@ class DummyClassCrudController extends CrudController
 
     public function setup()
     {
-        $this->crud->setModel('App\Models\DummyClass');
+        $this->crud->setModel(\App\Models\DummyClass::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/dummy_class');
         $this->crud->setEntityNameStrings('dummy_class', 'DummyTable');
     }
 
     protected function setupListOperation()
     {
-        // TODO: remove setFromDb() and manually define Columns, maybe Filters
-        $this->crud->setFromDb();
+        $this->crud->setFromDb(); // columns
     }
 
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(DummyClassRequest::class);
 
-        // TODO: remove setFromDb() and manually define Fields
-        $this->crud->setFromDb();
+        $this->crud->setFromDb(); // fields
     }
 
     protected function setupUpdateOperation()

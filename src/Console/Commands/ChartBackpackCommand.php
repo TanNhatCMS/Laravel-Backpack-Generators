@@ -38,7 +38,7 @@ class ChartBackpackCommand extends Command
 
         // Create the chart route
         Artisan::call('backpack:add-custom-route', [
-            'code' => "Route::get('charts/".$kebabName."', 'Charts\\".$studlyName."ChartController@response')->name('charts.'."$kebabName".'.index');",
+            'code' => "Route::get('charts/" .$kebabName."', 'Charts\\".$studlyName."ChartController@response')->name('charts.".$kebabName.".index');",
         ]);
         echo Artisan::output();
     }

@@ -19,7 +19,7 @@ class CrudModelBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-model {name}';
+    protected $signature = 'backpack:crud-model {name} {folder?}';
 
     /**
      * The console command description.
@@ -54,7 +54,10 @@ class CrudModelBackpackCommand extends GeneratorCommand
         $name = $this->getNameInput();
         $namespaceApp = $this->qualifyClass($this->getNameInput());
         $namespaceModels = $this->qualifyClass('/Models/'.$this->getNameInput());
-
+        if (strlen($this->argument('folder')) > 1) {
+            $folderName = ucfirst($this->argument('folder'));
+            $namespaceModels = $this->qualifyClass('/Models/'.$folderName.'/'.$this->getNameInput());
+        }
         // Check if exists on app or models
         $existsOnApp = $this->alreadyExists($namespaceApp);
         $existsOnModels = $this->alreadyExists($namespaceModels);
@@ -63,7 +66,11 @@ class CrudModelBackpackCommand extends GeneratorCommand
         // should be written. Then, we will build the class and make the proper replacements on
         // the stub files so that it gets the correctly formatted namespace and class name.
         if (! $existsOnApp && ! $existsOnModels) {
-            $this->makeDirectory($namespaceModels);
+            if (strlen($this->argument('folder')) > 1) {
+                mkdir(str_replace('/'.$this->getNameInput().'.php', '', $this->getPath($namespaceModels)));
+            } else {
+                $this->makeDirectory($namespaceModels);
+            }
 
             $this->files->put($this->getPath($namespaceModels), $this->sortImports($this->buildClass($namespaceModels)));
 
@@ -173,7 +180,6 @@ class CrudModelBackpackCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-
         return $this->replaceNamespace($stub, $name)->replaceTable($stub, $name)->replaceClass($stub, $name);
     }
 

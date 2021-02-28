@@ -20,7 +20,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-controller {name}';
+    protected $signature = 'backpack:crud-controller {name} {folder?} {--rf}';
 
     /**
      * The console command description.
@@ -46,7 +46,6 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = str_replace($this->laravel->getNamespace(), '', $name);
-
         return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'CrudController.php';
     }
 
@@ -69,7 +68,13 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Controllers\Admin';
+        $currentNamespace = $rootNamespace.'\Http\Controllers\Admin';
+        if (strlen($this->argument('folder')) > 1) {
+            $folderName = ucfirst($this->argument('folder'));
+            $currentNamespace = $rootNamespace.'\Http\Controllers\Admin\\'.$folderName;
+
+        }
+        return $currentNamespace;
     }
 
     /**
@@ -85,6 +90,12 @@ class CrudControllerBackpackCommand extends GeneratorCommand
         $table = Str::plural(ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', str_replace($this->getNamespace($name).'\\', '', $name))), '_'));
 
         $stub = str_replace('DummyTable', $table, $stub);
+        if (strlen($this->argument('folder')) > 1) {
+            $folderLowerName = strtolower($this->argument('folder'));
+            if ($this->option('rf') == true) {
+                $stub = str_replace('/dummy_class', '/'.$folderLowerName.'/'.strtolower(str_replace($this->getNamespace($name).'\\', '', $name)), $stub);
+            }
+        }
         $stub = str_replace('dummy_class', strtolower(str_replace($this->getNamespace($name).'\\', '', $name)), $stub);
 
         return $this;
@@ -118,6 +129,10 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     {
         $class = Str::afterLast($name, '\\');
         $model = "App\\Models\\$class";
+        if (strlen($this->argument('folder')) > 1) {
+            $folderName = ucfirst($this->argument('folder'));
+            $model = "App\\Models\\".$folderName."\\$class";
+        }
 
         if (! class_exists($model)) {
             return $this;
@@ -159,7 +174,22 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function replaceModel(&$stub, $name)
     {
         $class = str_replace($this->getNamespace($name).'\\', '', $name);
-        $stub = str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+        if (strlen($this->argument('folder')) > 1) {
+            $folderName = ucfirst($this->argument('folder'));
+
+            // replace crudcontroller
+            $stub = str_replace('DummyClassCrudController', $class.'CrudController', $stub);
+
+            // replace CrudRequest
+            $stub = str_replace('\DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
+            $stub = str_replace('DummyClassRequest', $class.'Request', $stub);
+
+            // replace CrudModel
+            $stub = str_replace('DummyClass::class', $folderName.'\\'.$class.'::class', $stub);
+
+        } else {
+            $stub = str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+        }
 
         return $this;
     }
@@ -176,9 +206,9 @@ class CrudControllerBackpackCommand extends GeneratorCommand
         $stub = $this->files->get($this->getStub());
 
         $this->replaceNamespace($stub, $name)
-                ->replaceNameStrings($stub, $name)
-                ->replaceModel($stub, $name)
-                ->replaceSetFromDb($stub, $name);
+            ->replaceNameStrings($stub, $name)
+            ->replaceModel($stub, $name)
+            ->replaceSetFromDb($stub, $name);
 
         return $stub;
     }

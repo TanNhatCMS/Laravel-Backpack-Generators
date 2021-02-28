@@ -20,7 +20,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-controller {name} {folder?}';
+    protected $signature = 'backpack:crud-controller {name} {folder?} {--rf?}';
 
     /**
      * The console command description.
@@ -90,6 +90,12 @@ class CrudControllerBackpackCommand extends GeneratorCommand
         $table = Str::plural(ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', str_replace($this->getNamespace($name).'\\', '', $name))), '_'));
 
         $stub = str_replace('DummyTable', $table, $stub);
+        if (strlen($this->argument('folder')) > 1) {
+            $folderLowerName = strtolower($this->argument('folder'));
+            if ($this->option('rf') == true) {
+                $stub = str_replace('/dummy_class', '/'.$folderLowerName.'/'.strtolower(str_replace($this->getNamespace($name).'\\', '', $name)), $stub);
+            }
+        }
         $stub = str_replace('dummy_class', strtolower(str_replace($this->getNamespace($name).'\\', '', $name)), $stub);
 
         return $this;

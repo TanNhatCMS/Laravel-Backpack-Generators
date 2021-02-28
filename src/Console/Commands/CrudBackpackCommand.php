@@ -34,7 +34,7 @@ class CrudBackpackCommand extends Command
 
         $argumentsArray = ['name' => $name];
         $crudControllerName = "{$name}CrudController";
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
             $argumentsArray['folder'] = $folderName;
             $crudControllerName = "$folderName\\".$name."CrudController";

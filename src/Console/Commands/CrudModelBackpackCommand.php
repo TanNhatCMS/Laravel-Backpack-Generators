@@ -54,7 +54,7 @@ class CrudModelBackpackCommand extends GeneratorCommand
         $name = $this->getNameInput();
         $namespaceApp = $this->qualifyClass($this->getNameInput());
         $namespaceModels = $this->qualifyClass('/Models/'.$this->getNameInput());
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
             $namespaceModels = $this->qualifyClass('/Models/'.$folderName.'/'.$this->getNameInput());
         }
@@ -66,7 +66,7 @@ class CrudModelBackpackCommand extends GeneratorCommand
         // should be written. Then, we will build the class and make the proper replacements on
         // the stub files so that it gets the correctly formatted namespace and class name.
         if (! $existsOnApp && ! $existsOnModels) {
-            if ($this->hasArgument('folder')) {
+            if (strlen($this->argument('folder')) > 1) {
                 mkdir(str_replace('/'.$this->getNameInput().'.php', '', $this->getPath($namespaceModels)));
             } else {
                 $this->makeDirectory($namespaceModels);

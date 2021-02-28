@@ -69,7 +69,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         $currentNamespace = $rootNamespace.'\Http\Controllers\Admin';
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
             $currentNamespace = $rootNamespace.'\Http\Controllers\Admin\\'.$folderName;
 
@@ -123,7 +123,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     {
         $class = Str::afterLast($name, '\\');
         $model = "App\\Models\\$class";
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
             $model = "App\\Models\\".$folderName."\\$class";
         }
@@ -168,7 +168,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function replaceModel(&$stub, $name)
     {
         $class = str_replace($this->getNamespace($name).'\\', '', $name);
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
 
             // replace crudcontroller

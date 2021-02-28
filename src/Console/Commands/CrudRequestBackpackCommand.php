@@ -67,7 +67,7 @@ class CrudRequestBackpackCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         $currentNamespace = $rootNamespace.'\Http\Requests';
-        if ($this->hasArgument('folder')) {
+        if (strlen($this->argument('folder')) > 1) {
             $folderName = ucfirst($this->argument('folder'));
             $currentNamespace =$rootNamespace.'\Http\Requests\\'.$folderName;
 

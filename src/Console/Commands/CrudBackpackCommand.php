@@ -37,7 +37,7 @@ class CrudBackpackCommand extends Command
         if ($this->hasArgument('folder')) {
             $folderName = ucfirst($this->argument('folder'));
             $argumentsArray['folder'] = $folderName;
-            $crudControllerName = "$folderName\{$name}CrudController";
+            $crudControllerName = "$folderName\\".$name."CrudController";
         }
         // Create the CRUD Controller and show output
         $this->call('backpack:crud-controller', $argumentsArray);

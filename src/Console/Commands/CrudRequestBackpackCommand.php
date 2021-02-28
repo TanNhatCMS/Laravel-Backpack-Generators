@@ -44,11 +44,6 @@ class CrudRequestBackpackCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = str_replace($this->laravel->getNamespace(), '', $name);
-        $path = $this->laravel['path'].'/'.str_replace('\\', '/', $name).'Request.php';
-        if ($this->hasArgument('folder')) {
-            $folderName = ucfirst($this->argument('folder'));
-            $path = $this->laravel['path'].'/'.$folderName.'/'.str_replace('\\', '/', $name).'Request.php';
-        }
         return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'Request.php';
     }
 
@@ -77,7 +72,7 @@ class CrudRequestBackpackCommand extends GeneratorCommand
             $currentNamespace =$rootNamespace.'\Http\Requests\\'.$folderName;
 
         }
-        return $rootNamespace.'\Http\Requests';
+        return $currentNamespace;
     }
 
     /**

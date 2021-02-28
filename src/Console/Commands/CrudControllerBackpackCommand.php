@@ -168,7 +168,21 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function replaceModel(&$stub, $name)
     {
         $class = str_replace($this->getNamespace($name).'\\', '', $name);
-        $stub = str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+
+            // replace crudcontroller
+            $stub = str_replace('DummyClassCrudController', $class.'CrudController', $stub);
+
+            // replace CrudRequest
+            $stub = str_replace('\DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
+
+            // replace CrudModel
+            $stub = str_replace('DummyClass::class', $folderName.'\\'.$class.'::class', $stub);
+
+        } else {
+            $stub = str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+        }
 
         return $this;
     }
@@ -185,9 +199,9 @@ class CrudControllerBackpackCommand extends GeneratorCommand
         $stub = $this->files->get($this->getStub());
 
         $this->replaceNamespace($stub, $name)
-                ->replaceNameStrings($stub, $name)
-                ->replaceModel($stub, $name)
-                ->replaceSetFromDb($stub, $name);
+            ->replaceNameStrings($stub, $name)
+            ->replaceModel($stub, $name)
+            ->replaceSetFromDb($stub, $name);
 
         return $stub;
     }

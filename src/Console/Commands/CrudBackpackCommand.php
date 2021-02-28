@@ -12,7 +12,7 @@ class CrudBackpackCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backpack:crud {name} {folder?} {--rf?}';
+    protected $signature = 'backpack:crud {name} {folder?} {--rf}';
 
     /**
      * The console command description.
@@ -44,7 +44,7 @@ class CrudBackpackCommand extends Command
         if ($this->option('rf') == true) {
             // Create the CRUD Controller and show output
             $this->call('backpack:crud-controller', array_merge($argumentsArray, [
-                'rf' => true
+                '--rf' => true
             ]));
         } else {
             // Create the CRUD Controller and show output

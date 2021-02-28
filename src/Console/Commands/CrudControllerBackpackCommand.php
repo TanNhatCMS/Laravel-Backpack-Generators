@@ -20,7 +20,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-controller {name} {folder?} {--rf?}';
+    protected $signature = 'backpack:crud-controller {name} {folder?} {--rf}';
 
     /**
      * The console command description.
@@ -182,6 +182,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
 
             // replace CrudRequest
             $stub = str_replace('\DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
+            $stub = str_replace('DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
 
             // replace CrudModel
             $stub = str_replace('DummyClass::class', $folderName.'\\'.$class.'::class', $stub);

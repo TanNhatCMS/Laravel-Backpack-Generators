@@ -18,7 +18,7 @@ class CrudRequestBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-request {name}';
+    protected $signature = 'backpack:crud-request {name} {folder?}';
 
     /**
      * The console command description.
@@ -44,7 +44,11 @@ class CrudRequestBackpackCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = str_replace($this->laravel->getNamespace(), '', $name);
-
+        $path = $this->laravel['path'].'/'.str_replace('\\', '/', $name).'Request.php';
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $path = $this->laravel['path'].'/'.$folderName.'/'.str_replace('\\', '/', $name).'Request.php';
+        }
         return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'Request.php';
     }
 
@@ -67,6 +71,12 @@ class CrudRequestBackpackCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
+        $currentNamespace = $rootNamespace.'\Http\Requests';
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $currentNamespace =$rootNamespace.'\Http\Requests\\'.$folderName;
+
+        }
         return $rootNamespace.'\Http\Requests';
     }
 

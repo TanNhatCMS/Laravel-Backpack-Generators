@@ -19,7 +19,7 @@ class CrudModelBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-model {name}';
+    protected $signature = 'backpack:crud-model {name} {folder?}';
 
     /**
      * The console command description.
@@ -54,7 +54,10 @@ class CrudModelBackpackCommand extends GeneratorCommand
         $name = $this->getNameInput();
         $namespaceApp = $this->qualifyClass($this->getNameInput());
         $namespaceModels = $this->qualifyClass('/Models/'.$this->getNameInput());
-
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $namespaceModels = $this->qualifyClass('/Models/'.$folderName.'/'.$this->getNameInput());
+        }
         // Check if exists on app or models
         $existsOnApp = $this->alreadyExists($namespaceApp);
         $existsOnModels = $this->alreadyExists($namespaceModels);

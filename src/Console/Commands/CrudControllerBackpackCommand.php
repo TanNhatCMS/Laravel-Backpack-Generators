@@ -20,7 +20,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-controller {name}';
+    protected $signature = 'backpack:crud-controller {name} {folder?}';
 
     /**
      * The console command description.
@@ -46,8 +46,12 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = str_replace($this->laravel->getNamespace(), '', $name);
-
-        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'CrudController.php';
+        $path = $this->laravel['path'].'/'.str_replace('\\', '/', $name).'CrudController.php';
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $path = $this->laravel['path'].'/'.$folderName.'/'.str_replace('\\', '/', $name).'CrudController.php';
+        }
+        return $path;
     }
 
     /**
@@ -69,7 +73,13 @@ class CrudControllerBackpackCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Controllers\Admin';
+        $currentNamespace = $rootNamespace.'\Http\Controllers\Admin';
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $currentNamespace = $rootNamespace.'\Http\Controllers\Admin\\'.$folderName;
+
+        }
+        return $currentNamespace;
     }
 
     /**
@@ -118,6 +128,10 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     {
         $class = Str::afterLast($name, '\\');
         $model = "App\\Models\\$class";
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $model = "App\\Models\\".$folderName."\\$class";
+        }
 
         if (! class_exists($model)) {
             return $this;

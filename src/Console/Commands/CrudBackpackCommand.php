@@ -12,7 +12,7 @@ class CrudBackpackCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backpack:crud {name}';
+    protected $signature = 'backpack:crud {name} {folder?}';
 
     /**
      * The console command description.
@@ -32,18 +32,25 @@ class CrudBackpackCommand extends Command
         $lowerName = strtolower($this->argument('name'));
         $pluralName = Str::plural($name);
 
+        $argumentsArray = ['name' => $name];
+        $crudControllerName = "{$name}CrudController";
+        if ($this->hasArgument('folder')) {
+            $folderName = ucfirst($this->argument('folder'));
+            $argumentsArray['folder'] = $folderName;
+            $crudControllerName = "$folderName\{$name}CrudController";
+        }
         // Create the CRUD Controller and show output
-        $this->call('backpack:crud-controller', ['name' => $name]);
+        $this->call('backpack:crud-controller', $argumentsArray);
 
         // Create the CRUD Model and show output
-        $this->call('backpack:crud-model', ['name' => $name]);
+        $this->call('backpack:crud-model', $argumentsArray);
 
         // Create the CRUD Request and show output
-        $this->call('backpack:crud-request', ['name' => $name]);
+        $this->call('backpack:crud-request', $argumentsArray);
 
         // Create the CRUD route
         $this->call('backpack:add-custom-route', [
-            'code' => "Route::crud('$lowerName', '{$name}CrudController');",
+            'code' => "Route::crud('$lowerName', '$crudControllerName');",
         ]);
 
         // Create the sidebar item

@@ -46,12 +46,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = str_replace($this->laravel->getNamespace(), '', $name);
-        $path = $this->laravel['path'].'/'.str_replace('\\', '/', $name).'CrudController.php';
-        if ($this->hasArgument('folder')) {
-            $folderName = ucfirst($this->argument('folder'));
-            $path = $this->laravel['path'].'/'.$folderName.'/'.str_replace('\\', '/', $name).'CrudController.php';
-        }
-        return $path;
+        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'CrudController.php';
     }
 
     /**

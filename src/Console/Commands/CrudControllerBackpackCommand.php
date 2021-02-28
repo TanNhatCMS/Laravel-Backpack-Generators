@@ -182,7 +182,7 @@ class CrudControllerBackpackCommand extends GeneratorCommand
 
             // replace CrudRequest
             $stub = str_replace('\DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
-            $stub = str_replace('DummyClassRequest', "\\".$folderName.'\\'.$class.'Request', $stub);
+            $stub = str_replace('DummyClassRequest', $class.'Request', $stub);
 
             // replace CrudModel
             $stub = str_replace('DummyClass::class', $folderName.'\\'.$class.'::class', $stub);

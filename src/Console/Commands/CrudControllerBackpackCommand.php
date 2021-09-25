@@ -147,12 +147,9 @@ class CrudControllerBackpackCommand extends GeneratorCommand
             ->toArray();
 
         // replace setFromDb with actual fields and columns
-        $newLine = PHP_EOL.'        ';
-        $serachFileds = 'CRUD::setFromDb(); // fields';
-        $serachColumns = 'CRUD::setFromDb(); // columns';
-
-        $stub = str_replace($serachFileds, '// '.$serachFileds.$newLine.implode($newLine, $fields), $stub);
-        $stub = str_replace($serachColumns, '// '.$serachColumns.$newLine.implode($newLine, $columns), $stub);
+        $line = "\n        ";
+        $stub = preg_replace('/(CRUD::setFromDb.+fields)/', "// $1\n".$line.implode($line, $fields), $stub);
+        $stub = preg_replace('/(CRUD::setFromDb.+columns)/', "// $1\n".$line.implode($line, $columns), $stub);
 
         return $this;
     }

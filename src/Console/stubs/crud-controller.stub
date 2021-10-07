@@ -28,7 +28,7 @@ class DummyClassCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\DummyClass::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dummy-class');
-        CRUD::setEntityNameStrings('dummy singular', 'dummy plural');
+        CRUD::setEntityNameStrings(__('dummy singular'), __('dummy plural'));
     }
 
     /**

@@ -19,7 +19,7 @@ trait DummyClassOperation
     {
         $this->formRoutes(
             operationName: 'dummyClass',
-            routesHaveIdSegment: true,
+            routesHaveIdSegment: DUMMY_ROUTE_WITH_ID,
             segment: $segment,
             routeName: $routeName,
             controller: $controller
@@ -33,7 +33,7 @@ trait DummyClassOperation
     {
         $this->formDefaults(
             operationName: 'dummyClass',
-            // buttonStack: 'line', // alternatives: top, bottom
+            buttonStack: 'DUMMY_BUTTON_STACK', // alternatives: top, bottom
             // buttonMeta: [
             //     'icon' => 'la la-home',
             //     'label' => 'Dummy Class',
@@ -48,11 +48,11 @@ trait DummyClassOperation
      * Method to handle the GET request and display the View with a Backpack form
      *
      */
-    public function getDummyClassForm(?int $id = null) : \Illuminate\Contracts\View\View
+    public function getDummyClassForm(DUMMY_FUNCTION_PARAMETERS) : \Illuminate\Contracts\View\View
     {
         $this->crud->hasAccessOrFail('dummyClass');
 
-        return $this->formView($id);
+        return $this->formView(DUMMY_GETFORM_VIEW_PARAMETER);
     }
 
     /**
@@ -60,11 +60,11 @@ trait DummyClassOperation
     *
     * @return array|\Illuminate\Http\RedirectResponse
     */
-    public function postDummyClassForm(?int $id = null)
+    public function postDummyClassForm(DUMMY_FUNCTION_PARAMETERS)
     {
         $this->crud->hasAccessOrFail('dummyClass');
 
-        return $this->formAction($id, function ($inputs, $entry) {
+        return $this->formAction(DUMMY_FORM_ACTION_CALLBACK
             // You logic goes here...
             // dd('got to ' . __METHOD__, $inputs, $entry);
 

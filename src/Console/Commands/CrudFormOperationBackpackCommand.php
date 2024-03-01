@@ -19,7 +19,7 @@ class CrudFormOperationBackpackCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'backpack:crud-form-operation {name}';
+    protected $signature = 'backpack:crud-form-operation {name} {--no-id}';
 
     /**
      * The console command description.
@@ -71,12 +71,8 @@ class CrudFormOperationBackpackCommand extends GeneratorCommand
 
     /**
      * Replace the table name for the given stub.
-     *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return string
      */
-    protected function replaceNameStrings(&$stub, $name)
+    protected function replaceNameStrings(string &$stub, string $name): self
     {
         $name = Str::of($name)->afterLast('\\');
 
@@ -85,6 +81,11 @@ class CrudFormOperationBackpackCommand extends GeneratorCommand
         $stub = str_replace('Dummy Class', $name->snake()->replace('_', ' ')->title(), $stub);
         $stub = str_replace('dummy-class', $name->snake('-'), $stub);
         $stub = str_replace('dummy_class', $name->snake(), $stub);
+        $stub = str_replace('DUMMY_ROUTE_WITH_ID', $this->option('no-id') ? 'false' : 'true', $stub);
+        $stub = str_replace('DUMMY_BUTTON_STACK', $this->option('no-id') ? 'top' : 'line', $stub);
+        $stub = str_replace('DUMMY_FORM_ACTION_CALLBACK', $this->option('no-id') ? 'formLogic: function ($inputs, $entry) {' : 'id: $id, formLogic: function ($inputs, $entry) {', $stub);
+        $stub = str_replace('DUMMY_FUNCTION_PARAMETERS', $this->option('no-id') ? '' : 'int $id', $stub);
+        $stub = str_replace('DUMMY_GETFORM_VIEW_PARAMETER', $this->option('no-id') ? '' : '$id', $stub);
 
         return $this;
     }

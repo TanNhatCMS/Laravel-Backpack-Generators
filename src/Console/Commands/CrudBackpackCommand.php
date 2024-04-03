@@ -78,7 +78,14 @@ class CrudBackpackCommand extends BackpackCommand
             $this->call('route:cache');
         }
 
-        $url = Str::of(config('app.url'))->finish('/')->append('admin/')->append($nameKebab);
+        $routePrefix = config('backpack.base.route_prefix');
+        
+        $url = Str::of(config('app.url'))
+            ->finish('/')
+            ->when($routePrefix !== '', function ($string) use ($routePrefix) {
+                return $string->append($routePrefix)->finish('/');
+            })
+            ->append($nameKebab);
 
         $this->newLine();
         $this->line("  Done! Go to <fg=blue>$url</> to see the CRUD in action.");

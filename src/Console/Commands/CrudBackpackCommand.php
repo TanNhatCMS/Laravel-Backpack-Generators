@@ -79,7 +79,7 @@ class CrudBackpackCommand extends BackpackCommand
         }
 
         $routePrefix = config('backpack.base.route_prefix');
-        
+
         $url = Str::of(config('app.url'))
             ->finish('/')
             ->when($routePrefix !== '', function ($string) use ($routePrefix) {

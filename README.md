@@ -2,16 +2,13 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/backpack/generators.svg?style=flat-square)](https://packagist.org/packages/backpack/generators)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/laravel-backpack/generators/master.svg?style=flat-square)](https://travis-ci.org/laravel-backpack/generators)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/laravel-backpack/generators.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-backpack/generators/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/laravel-backpack/generators.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-backpack/generators)
 [![Style CI](https://styleci.io/repos/53490941/shield)](https://styleci.io/repos/53490941)
 [![Total Downloads](https://img.shields.io/packagist/dt/backpack/generators.svg?style=flat-square)](https://packagist.org/packages/backpack/generators)
 
 Quickly generate Backpack templated Models, Requests, Views and Config files for projects using [Backpack for Laravel](https://backpackforlaravel.com) as their admin panel.
 
 > ### Security updates and breaking changes
-> Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
+> Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 6-12 months.
 
 ## Install
 
@@ -19,10 +16,9 @@ Via Composer
 
 ``` bash
 composer require --dev backpack/generators
-
-// OPTIONAL: if you would like to change Backpack generated files you can publish the stubs with:
-php artisan vendor:publish --tag=backpack-generators-stubs
 ```
+
+[HOT TIP] To change what files get generated, you can publish the stubs with `php artisan vendor:publish --tag=backpack-generators-stubs`. Any files you generate afterwards will start from your stubs, instead of the default ones.
 
 ## Usage
 

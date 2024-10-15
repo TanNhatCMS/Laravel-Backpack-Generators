@@ -226,9 +226,9 @@ class CrudControllerBackpackCommand extends BackpackCommand
             $stub = str_replace('        CRUD::setValidation(DummyClassRequest::class);'.PHP_EOL, '', $stub);
         }
 
-        if($validation !== 'request') {
+        if ($validation !== 'request') {
             $stub = str_replace('use App\Http\Requests\DummyModelClassRequest;', '', $stub);
-        }else{
+        } else {
             // add a new line after the use statement
             $stub = str_replace('use App\Http\Requests\DummyModelClassRequest;', "use App\Http\Requests\DummyModelClassRequest;\n", $stub);
         }

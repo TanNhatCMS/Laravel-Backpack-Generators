@@ -147,7 +147,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 - [Cristian Tone](http://updivision.com)
 - [Cristian Tabacitu](http://tabacitu.ro)
-- [All Contributors](link-contributors)
+- [All Contributors](https://github.com/Laravel-Backpack/Generators/graphs/contributors)
 
 ## License
 

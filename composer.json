@@ -27,6 +27,9 @@
     "require": {
         "tannhatcms/crud": "^6.0"
     },
+    "replace": {
+        "backpack/generators": "*"
+    },
     "autoload": {
         "psr-4": {
             "Backpack\\Generators\\": "src"
